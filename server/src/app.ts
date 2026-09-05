@@ -48,9 +48,9 @@ export function createApp(): Express {
   app.use(engageRouter);
 
   // Built SPA, when present (production). Vite dev server proxies to us otherwise.
-  const clientDir = join(process.cwd(), "..", "client", "dist");
-  const clientDirAlt = join(process.cwd(), "client", "dist");
-  const dist = existsSync(clientDir) ? clientDir : existsSync(clientDirAlt) ? clientDirAlt : null;
+  // Dev/VPS: the Vite build next to the server. Docker: copied to ./public. (Vercel serves public/ itself.)
+  const candidates = [join(process.cwd(), "..", "client", "dist"), join(process.cwd(), "client", "dist"), join(process.cwd(), "public")];
+  const dist = candidates.find((d) => existsSync(join(d, "index.html"))) ?? null;
   if (dist) {
     app.use(express.static(dist, { index: false, maxAge: "1h" }));
     app.get(/^\/(?!api\/|jobs\/|r\/|d\/|f$|unsubscribe\/|health$).*/, (_req, res) => {

@@ -7,7 +7,7 @@ COPY server/package.json server/
 COPY client/package.json client/
 RUN pnpm install --frozen-lockfile
 COPY . .
-RUN pnpm build && pnpm --filter server --prod deploy /out
+RUN pnpm build && pnpm --filter server --prod deploy --legacy /out
 
 FROM node:22-alpine
 ENV NODE_ENV=production PORT=3000
