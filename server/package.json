@@ -14,7 +14,8 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx --env-file=../.env src/db/migrate.ts",
     "db:seed": "tsx --env-file=../.env src/db/seed.ts",
-    "feeds:refresh": "tsx --env-file=../.env src/feeds/cli.ts"
+    "feeds:refresh": "tsx --env-file=../.env src/feeds/cli.ts",
+    "email:preview": "tsx src/emails/preview.ts"
   },
   "dependencies": {
     "@react-email/components": "^1.0.12",
