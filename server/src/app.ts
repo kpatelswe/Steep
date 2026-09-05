@@ -54,6 +54,9 @@ export function createApp(): Express {
   if (dist) {
     app.use(express.static(dist, { index: false, maxAge: "1h" }));
     app.get(/^\/(?!api\/|jobs\/|r\/|d\/|f$|unsubscribe\/|health$).*/, (_req, res) => {
+      // Hashed assets are immutable; the shell must always be revalidated or a
+      // browser can keep an index.html that points at assets from an old build.
+      res.set("cache-control", "no-cache");
       res.sendFile(join(dist, "index.html"));
     });
   }
