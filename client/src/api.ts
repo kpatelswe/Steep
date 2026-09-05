@@ -64,6 +64,21 @@ export const api = {
   sendNow: () => call<{ outcome: { status: string; articleCount?: number; dryRun?: boolean } }>("POST", "/api/digest/send-now"),
 };
 
+export const MAX_TOPICS = 10;
+
+/** Every IANA zone the browser knows, with the browser's own zone first. */
+export function timezoneOptions(): string[] {
+  const zones = (() => {
+    try {
+      return (Intl as unknown as { supportedValuesOf?: (k: string) => string[] }).supportedValuesOf?.("timeZone") ?? [];
+    } catch {
+      return [];
+    }
+  })();
+  const mine = browserTimezone();
+  return zones.includes(mine) ? zones : [mine, ...zones];
+}
+
 export function browserTimezone(): string {
   try {
     return Intl.DateTimeFormat().resolvedOptions().timeZone || "America/Toronto";

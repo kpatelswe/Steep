@@ -10,6 +10,9 @@ import { logger } from "../logger";
 
 export const topicsRouter = Router();
 
+/** Followed topics per reader, curated and custom together. Keeps issues short and feed fetching bounded. */
+export const MAX_TOPICS = 10;
+
 export function slugify(name: string): string {
   return name
     .toLowerCase()
@@ -52,6 +55,11 @@ topicsRouter.post("/api/topics/custom", requireUser, async (req, res) => {
     res.status(400).json({ error: "Use letters or numbers in the topic name" });
     return;
   }
+  const [followedCount] = await db.select({ n: sql<number>`count(*)::int` }).from(userTopics).where(eq(userTopics.userId, req.user!.id));
+  if ((followedCount?.n ?? 0) >= MAX_TOPICS) {
+    res.status(400).json({ error: `You can follow up to ${MAX_TOPICS} topics. Unfollow one first.` });
+    return;
+  }
   let [topic] = await db.select().from(topics).where(eq(topics.slug, slug)).limit(1);
   let created = false;
   if (!topic) {
@@ -72,13 +80,13 @@ topicsRouter.post("/api/topics/custom", requireUser, async (req, res) => {
   res.status(created ? 201 : 200).json({ topic: { id: topic!.id, slug: topic!.slug, name: topic!.name, accent: topic!.accent, kind: topic!.kind, weight: 5, articleCount: countRow?.n ?? 0 } });
 });
 
-const followSchema = z.object({ topicIds: z.array(z.string().uuid()).max(30) });
+const followSchema = z.object({ topicIds: z.array(z.string().uuid()).min(1).max(MAX_TOPICS) });
 
 /** Replace the followed set; weights of kept topics survive. */
 topicsRouter.put("/api/me/topics", requireUser, async (req, res) => {
   const parsed = followSchema.safeParse(req.body);
   if (!parsed.success) {
-    res.status(400).json({ error: "Pick at least one topic" });
+    res.status(400).json({ error: `Pick between 1 and ${MAX_TOPICS} topics` });
     return;
   }
   const userId = req.user!.id;

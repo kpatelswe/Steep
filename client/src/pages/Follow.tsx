@@ -1,6 +1,6 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { useNavigate, useSearchParams } from "react-router";
-import { api, ApiError, browserTimezone, type FollowedTopic, type TopicSummary } from "../api";
+import { api, ApiError, browserTimezone, MAX_TOPICS, timezoneOptions, type FollowedTopic, type TopicSummary } from "../api";
 import { Button, Card, Notice, Wordmark, hourLabel } from "../ui";
 
 export default function Follow() {
@@ -15,6 +15,8 @@ export default function Follow() {
   const [busy, setBusy] = useState<"save" | "custom" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isNew, setIsNew] = useState(true);
+  const zones = useMemo(() => timezoneOptions(), []);
+  const atCap = selected.size >= MAX_TOPICS;
 
   useEffect(() => {
     (async () => {
@@ -45,10 +47,14 @@ export default function Follow() {
   }, [navigate, params]);
 
   function toggle(id: string) {
+    setError(null);
     setSelected((s) => {
       const n = new Set(s);
       if (n.has(id)) n.delete(id);
-      else n.add(id);
+      else if (n.size >= MAX_TOPICS) {
+        setError(`You can follow up to ${MAX_TOPICS} topics. Unfollow one to add another.`);
+        return s;
+      } else n.add(id);
       return n;
     });
   }
@@ -56,6 +62,10 @@ export default function Follow() {
   async function addCustom(e: FormEvent) {
     e.preventDefault();
     if (!customName.trim()) return;
+    if (atCap) {
+      setError(`You can follow up to ${MAX_TOPICS} topics. Unfollow one to add another.`);
+      return;
+    }
     setBusy("custom");
     setError(null);
     try {
@@ -101,7 +111,7 @@ export default function Follow() {
 
       <h1 className="display mt-6 text-[40px] font-extrabold leading-[1.02] sm:text-[52px]">{isNew ? "What should we steep for you?" : "Your topics"}</h1>
       <p className="prose-steep mt-3 max-w-[36rem] text-[18px] leading-[1.55] text-brew-soft">
-        Each topic gets its own “5 things” block every morning. Two or three is a good start.
+        Each topic gets its own “5 things” block every morning. Two or three is a good start, ten is the most you can follow.
       </p>
 
       {error ? <div className="mt-6"><Notice tone="error">{error}</Notice></div> : null}
@@ -114,7 +124,8 @@ export default function Follow() {
                 type="button"
                 aria-pressed={selected.has(t.id)}
                 onClick={() => toggle(t.id)}
-                className={`w-full rounded-xl border bg-cup p-4 text-left transition ${selected.has(t.id) ? "border-brew shadow-[inset_0_0_0_1px_#22170F]" : "border-leaf hover:border-steam"}`}
+                aria-disabled={atCap && !selected.has(t.id)}
+                className={`w-full rounded-xl border bg-cup p-4 text-left transition ${selected.has(t.id) ? "border-brew shadow-[inset_0_0_0_1px_#22170F]" : atCap ? "border-leaf opacity-50" : "border-leaf hover:border-steam"}`}
               >
                 <div className="flex items-center justify-between">
                   <span className="display text-[20px] font-bold" style={{ color: t.accent }}>
@@ -157,7 +168,7 @@ export default function Follow() {
             maxLength={40}
             className="h-11 flex-1 rounded-lg border border-leaf bg-porcelain px-3 text-[15px] placeholder:text-steam"
           />
-          <Button type="submit" variant="ghost" disabled={busy === "custom" || !customName.trim()} className="h-11">
+          <Button type="submit" variant="ghost" disabled={busy === "custom" || !customName.trim() || atCap} className="h-11">
             {busy === "custom" ? "Adding…" : "Add topic"}
           </Button>
         </form>
@@ -194,7 +205,13 @@ export default function Follow() {
           </label>
           <label className="text-[14px] text-brew-soft">
             Your timezone
-            <input value={timezone} onChange={(e) => setTimezone(e.target.value)} className="mt-1 h-11 w-full rounded-lg border border-leaf bg-porcelain px-3 text-[15px] text-brew" />
+            <select value={timezone} onChange={(e) => setTimezone(e.target.value)} className="mt-1 h-11 w-full rounded-lg border border-leaf bg-porcelain px-3 text-[15px] text-brew">
+              {zones.map((z) => (
+                <option key={z} value={z}>
+                  {z.replace(/_/g, " ")}
+                </option>
+              ))}
+            </select>
           </label>
         </div>
         <p className="mt-3 text-[13px] text-steam">Detected from your browser. Issues go out at the top of the hour.</p>
@@ -202,9 +219,11 @@ export default function Follow() {
 
       <div className="sticky bottom-0 mt-8 flex items-center justify-between gap-4 border-t border-leaf bg-porcelain/95 py-4 backdrop-blur">
         <span className="text-[14px] text-brew-soft">
-          {selected.size} {selected.size === 1 ? "topic" : "topics"} · about {Math.max(1, Math.round((selected.size * 5 * 15) / 60))} min a morning
+          {selected.size === 0
+            ? "Pick at least one topic"
+            : `${selected.size} of ${MAX_TOPICS} topics · about ${Math.max(1, Math.round((selected.size * 5 * 15) / 60))} min a morning`}
         </span>
-        <Button onClick={save} disabled={busy === "save" || !topics} className="h-12 px-5">
+        <Button onClick={save} disabled={busy === "save" || !topics || selected.size === 0} className="h-12 px-5">
           {busy === "save" ? "Saving…" : isNew ? "Start steeping" : "Save changes"}
         </Button>
       </div>

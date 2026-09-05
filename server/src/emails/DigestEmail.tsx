@@ -88,7 +88,7 @@ function StoryMeta({ story }: { story: EmailStory }) {
       {story.clusterSize >= 3 ? (
         <>
           {"  "}
-          <span style={styles.badge}>{`Everyone’s covering this · ${story.clusterSize} sources`}</span>
+          <span style={styles.badge}>{`Covered by ${story.clusterSize} sources`}</span>
         </>
       ) : null}
     </Text>

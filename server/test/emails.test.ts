@@ -10,7 +10,7 @@ describe("DigestEmail", () => {
       expect(html).toContain(`${t.stories.length} things in ${t.name}`);
       for (const s of t.stories) expect(html).toContain(`href="${s.url}"`);
     }
-    expect(html.match(/covering this/g)?.length).toBe(3);
+    expect(html.match(/Covered by \d+ sources/g)?.length).toBe(3);
     expect(html).toContain("Steeped for 23h 40m");
     expect(html).toContain("Day 12 streak");
     expect(html).toContain("Quiet day in Science");

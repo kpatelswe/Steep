@@ -8,7 +8,7 @@
 
 - **"5 things in {Topic}"** blocks: a lead story with image and blurb, then four ranked rows. Never the same story twice.
 - **Follow anything.** Eight curated topics, plus custom ones ("Formula 1", "Raptors", "OpenAI") backed by Google News search feeds.
-- **"Everyone's covering this."** Stories reported by three or more publishers are detected by clustering headlines across sources and get a badge and a ranking boost. No LLMs involved.
+- **"Covered by N sources."** Stories reported by three or more publishers are detected by clustering headlines across sources and get a badge and a ranking boost. No LLMs involved.
 - **Trained by taps.** "More like this / less like this" links in every issue change how many stories that topic gets tomorrow. Click tracking reorders topics by what you actually open and powers a "your month" page.
 - **Morning, your time.** Each reader picks a wake-up hour and timezone. Issues are exactly-once per local day, even when the scheduler retries.
 - **Instant first issue.** "Send my first steep now" so you never have to wait until tomorrow to see it.
