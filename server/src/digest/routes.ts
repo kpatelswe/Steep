@@ -1,5 +1,5 @@
 import { Router } from "express";
-import rateLimit from "express-rate-limit";
+import { rateLimit } from "express-rate-limit";
 import { requireUser } from "../auth/session";
 import { config } from "../config";
 import { renderDigest } from "../emails/render";

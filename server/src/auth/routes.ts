@@ -1,5 +1,5 @@
 import { Router } from "express";
-import rateLimit from "express-rate-limit";
+import { rateLimit } from "express-rate-limit";
 import { count, eq } from "drizzle-orm";
 import { z } from "zod";
 import { config, isProd } from "../config";
