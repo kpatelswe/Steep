@@ -13,7 +13,8 @@
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx --env-file=../.env src/db/migrate.ts",
-    "db:seed": "tsx --env-file=../.env src/db/seed.ts"
+    "db:seed": "tsx --env-file=../.env src/db/seed.ts",
+    "feeds:refresh": "tsx --env-file=../.env src/feeds/cli.ts"
   },
   "dependencies": {
     "@react-email/components": "^1.0.12",

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
+  <title>The Verge - All Posts</title>
+  <updated>2026-09-08T12:00:00+00:00</updated>
+  <entry>
+    <title>Apple&#8217;s new MacBook Pro has a 24-hour battery and an M5 chip</title>
+    <link rel="alternate" href="https://www.theverge.com/2026/9/8/apple-m5-macbook-pro?utm_source=rss&amp;utm_medium=feed" />
+    <id>https://www.theverge.com/2026/9/8/apple-m5-macbook-pro</id>
+    <published>2026-09-08T11:20:00+00:00</published>
+    <updated>2026-09-08T11:20:00+00:00</updated>
+    <author><name>Nilay Patel</name></author>
+    <media:content url="https://cdn.verge.example/m5.jpg" medium="image" />
+    <content type="html">&lt;p&gt;Apple has announced the M5 MacBook Pro, and the headline feature is a battery that Apple says lasts a full day of mixed use. The new chip is built on a 2nm process and brings a &lt;em&gt;lot&lt;/em&gt; more GPU cores, which matters for the people who buy these machines for video and 3D work rather than email.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Tiny</title>
+    <link rel="alternate" href="https://www.theverge.com/2026/9/8/tiny" />
+    <id>https://www.theverge.com/2026/9/8/tiny</id>
+    <published>2026-09-08T11:00:00+00:00</published>
+    <content type="html">too short a title to keep</content>
+  </entry>
+</feed>
