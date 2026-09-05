@@ -143,3 +143,6 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
 .preview/
+
+# Built client copied for Vercel's CDN
+server/public/

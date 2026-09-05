@@ -9,13 +9,16 @@
   },
   "scripts": {
     "dev": "pnpm --filter server dev",
-    "build": "pnpm -r build",
+    "build": "pnpm -r build && rm -rf server/public && cp -r client/dist server/public",
     "test": "pnpm -r test",
     "lint": "eslint .",
     "typecheck": "pnpm -r typecheck",
     "db:generate": "pnpm --filter server db:generate",
     "db:migrate": "pnpm --filter server db:migrate",
-    "db:seed": "pnpm --filter server db:seed"
+    "db:seed": "pnpm --filter server db:seed",
+    "start": "pnpm --filter server start",
+    "feeds:refresh": "pnpm --filter server feeds:refresh",
+    "email:preview": "pnpm --filter server email:preview"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
