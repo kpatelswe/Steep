@@ -18,7 +18,6 @@ export function ScaledFrame({ src, title, docWidth = 600, height = 720, classNam
       <iframe
         title={title}
         src={src}
-        loading="lazy"
         style={{ width: docWidth, height: height / scale, transform: `scale(${scale})`, transformOrigin: "top left", border: 0, display: "block" }}
       />
     </div>

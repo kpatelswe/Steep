@@ -24,9 +24,20 @@ export default function Home() {
     }
   }
   useEffect(() => {
-    void load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    let active = true;
+    Promise.all([api.me(), api.stats()])
+      .then(([m, s]) => {
+        if (!active) return;
+        setMe(m);
+        setStats(s);
+      })
+      .catch((err: unknown) => {
+        if (active && err instanceof ApiError && err.status === 401) navigate("/", { replace: true });
+      });
+    return () => {
+      active = false;
+    };
+  }, [navigate]);
 
   async function sendNow() {
     setSending(true);
