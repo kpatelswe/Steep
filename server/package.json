@@ -5,16 +5,16 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "tsx watch --env-file=../.env src/index.ts",
+    "dev": "tsx watch --env-file-if-exists=../.env src/index.ts",
     "build": "tsup src/index.ts --format esm --target node22 --out-dir dist --clean",
     "start": "node dist/index.js",
     "test": "vitest run",
     "lint": "eslint src test",
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "tsx --env-file=../.env src/db/migrate.ts",
-    "db:seed": "tsx --env-file=../.env src/db/seed.ts",
-    "feeds:refresh": "tsx --env-file=../.env src/feeds/cli.ts",
+    "db:migrate": "tsx --env-file-if-exists=../.env src/db/migrate.ts",
+    "db:seed": "tsx --env-file-if-exists=../.env src/db/seed.ts",
+    "feeds:refresh": "tsx --env-file-if-exists=../.env src/feeds/cli.ts",
     "email:preview": "tsx src/emails/preview.ts"
   },
   "dependencies": {
