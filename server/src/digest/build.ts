@@ -1,4 +1,4 @@
-import { and, desc, eq, gte, inArray, lte, sql } from "drizzle-orm";
+import { and, desc, eq, gte, inArray, lte, ne, sql } from "drizzle-orm";
 import { db } from "../db/client";
 import { articles, clicks, digestArticles, digests, topics, userTopics, users, type User } from "../db/schema";
 import type { DigestData, EmailStory, EmailTopic } from "../emails/types";
@@ -110,10 +110,12 @@ export async function buildDigest(user: User, opts: { now?: Date; digestId?: str
   }
 
   // History: steeping time, streak, and whether this is a "suggest something" issue.
+  // The row for the issue being built may already exist (it is inserted before
+  // sending so retries can't double-send); it must not count as "the last issue".
   const history = await db
     .select({ localDate: digests.localDate, sentAt: digests.sentAt })
     .from(digests)
-    .where(and(eq(digests.userId, user.id), eq(digests.status, "sent")))
+    .where(and(eq(digests.userId, user.id), eq(digests.status, "sent"), opts.digestId ? ne(digests.id, opts.digestId) : sql`true`))
     .orderBy(desc(digests.sentAt))
     .limit(90);
   const last = history[0];
