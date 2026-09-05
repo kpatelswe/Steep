@@ -114,13 +114,20 @@ export const digests = pgTable(
       .references(() => users.id, { onDelete: "cascade" }),
     /** The user's local calendar date this digest belongs to, YYYY-MM-DD. */
     localDate: text("local_date").notNull(),
+    /** scheduled = the morning issue (one per local date); manual = "send me one now". */
+    kind: text("kind", { enum: ["scheduled", "manual"] }).notNull().default("scheduled"),
     sentAt: timestamp("sent_at", { withTimezone: true }).notNull().defaultNow(),
     status: text("status", { enum: ["sent", "failed", "skipped_empty"] }).notNull(),
     articleCount: integer("article_count").notNull().default(0),
     providerMessageId: text("provider_message_id"),
     error: text("error"),
   },
-  (t) => [uniqueIndex("digests_user_local_date_idx").on(t.userId, t.localDate)],
+  (t) => [
+    uniqueIndex("digests_user_local_date_idx")
+      .on(t.userId, t.localDate)
+      .where(sql`${t.kind} = 'scheduled'`),
+    index("digests_user_sent_idx").on(t.userId, t.sentAt),
+  ],
 );
 
 export const digestArticles = pgTable(

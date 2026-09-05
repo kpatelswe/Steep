@@ -7,6 +7,52 @@ import { clusterArticles } from "./cluster";
 import { tokenizeTitle } from "./normalize";
 import { MAX_AGE_HOURS, fetchFeedXml, parseFeedXml } from "./parse";
 
+interface FeedRow {
+  topicId: string;
+  url: string;
+  label: string;
+}
+
+async function refreshFeeds(feeds: FeedRow[], now: Date, limit = pLimit(6)): Promise<{ failedFeeds: number; parsed: number; inserted: number }> {
+  let failedFeeds = 0;
+  let parsed = 0;
+  let inserted = 0;
+  await Promise.all(
+    feeds.map((feed) =>
+      limit(async () => {
+        try {
+          const xml = await fetchFeedXml(feed.url);
+          const items = await parseFeedXml(xml, { feedUrl: feed.url, feedLabel: feed.label, now });
+          parsed += items.length;
+          if (items.length === 0) return;
+          const rows = await db
+            .insert(articles)
+            .values(items.map((i) => ({ ...i, topicId: feed.topicId })))
+            .onConflictDoNothing({ target: [articles.topicId, articles.urlHash] })
+            .returning({ id: articles.id });
+          inserted += rows.length;
+          logger.debug({ feed: feed.label, parsed: items.length, inserted: rows.length }, "feed refreshed");
+        } catch (err) {
+          failedFeeds++;
+          logger.warn({ feed: feed.label, url: feed.url, err: (err as Error).message }, "feed failed");
+        }
+      }),
+    ),
+  );
+  return { failedFeeds, parsed, inserted };
+}
+
+/** Refresh one topic's feeds and recluster it. Used right after a custom topic is created. */
+export async function refreshTopic(topicId: string, now = new Date()): Promise<{ inserted: number; failedFeeds: number }> {
+  const feeds = await db
+    .select({ topicId: topicFeeds.topicId, url: topicFeeds.url, label: topicFeeds.label })
+    .from(topicFeeds)
+    .where(eq(topicFeeds.topicId, topicId));
+  const r = await refreshFeeds(feeds, now);
+  await reclusterTopic(topicId, now);
+  return { inserted: r.inserted, failedFeeds: r.failedFeeds };
+}
+
 export interface RefreshStats {
   topics: number;
   feeds: number;
@@ -43,32 +89,7 @@ export async function refreshAllFeeds(opts: { concurrency?: number; now?: Date }
     .from(topicFeeds)
     .where(inArray(topicFeeds.topicId, targetTopics.map((t) => t.id)));
 
-  let failedFeeds = 0;
-  let parsed = 0;
-  let inserted = 0;
-
-  await Promise.all(
-    feeds.map((feed) =>
-      limit(async () => {
-        try {
-          const xml = await fetchFeedXml(feed.url);
-          const items = await parseFeedXml(xml, { feedUrl: feed.url, feedLabel: feed.label, now });
-          parsed += items.length;
-          if (items.length === 0) return;
-          const rows = await db
-            .insert(articles)
-            .values(items.map((i) => ({ ...i, topicId: feed.topicId })))
-            .onConflictDoNothing({ target: [articles.topicId, articles.urlHash] })
-            .returning({ id: articles.id });
-          inserted += rows.length;
-          logger.debug({ feed: feed.label, parsed: items.length, inserted: rows.length }, "feed refreshed");
-        } catch (err) {
-          failedFeeds++;
-          logger.warn({ feed: feed.label, url: feed.url, err: (err as Error).message }, "feed failed");
-        }
-      }),
-    ),
-  );
+  const { failedFeeds, parsed, inserted } = await refreshFeeds(feeds, now, limit);
 
   let clustered = 0;
   for (const t of targetTopics) clustered += await reclusterTopic(t.id, now);
