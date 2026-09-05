@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: steep-db
+    environment:
+      POSTGRES_USER: steep
+      POSTGRES_PASSWORD: steep
+      POSTGRES_DB: steep
+    ports:
+      - "5433:5432"
+    volumes:
+      - steep-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U steep -d steep"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  steep-pgdata:
