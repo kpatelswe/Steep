@@ -2,15 +2,15 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import cookieParser from "cookie-parser";
 import express, { type Express, type NextFunction, type Request, type Response } from "express";
-import { authRouter } from "./auth/routes";
-import { attachUser } from "./auth/session";
-import { sql as rawSql } from "./db/client";
-import { digestRouter } from "./digest/routes";
-import { engageRouter } from "./engage/routes";
-import { jobsRouter } from "./jobs/routes";
-import { logger } from "./logger";
-import { topicsRouter } from "./topics/routes";
-import { usersRouter } from "./users/routes";
+import { authRouter } from "./auth/routes.js";
+import { attachUser } from "./auth/session.js";
+import { sql as rawSql } from "./db/client.js";
+import { digestRouter } from "./digest/routes.js";
+import { engageRouter } from "./engage/routes.js";
+import { jobsRouter } from "./jobs/routes.js";
+import { logger } from "./logger.js";
+import { topicsRouter } from "./topics/routes.js";
+import { usersRouter } from "./users/routes.js";
 
 export function createApp(): Express {
   const app = express();

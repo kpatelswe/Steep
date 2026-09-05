@@ -1,12 +1,12 @@
 import { Router } from "express";
 import { rateLimit } from "express-rate-limit";
-import { requireUser } from "../auth/session";
-import { config } from "../config";
-import { renderDigest } from "../emails/render";
-import { verify } from "../engage/links";
-import { tinyPage } from "../pages";
-import { buildDigest, buildSampleDigest, rebuildSentDigest } from "./build";
-import { sendDigestToUser } from "./send";
+import { requireUser } from "../auth/session.js";
+import { config } from "../config.js";
+import { renderDigest } from "../emails/render.js";
+import { verify } from "../engage/links.js";
+import { tinyPage } from "../pages.js";
+import { buildDigest, buildSampleDigest, rebuildSentDigest } from "./build.js";
+import { sendDigestToUser } from "./send.js";
 
 export const digestRouter = Router();
 

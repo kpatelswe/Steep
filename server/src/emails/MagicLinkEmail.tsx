@@ -1,6 +1,6 @@
 import { Body, Button, Container, Head, Html, Preview, Section, Text } from "@react-email/components";
-import { GUTTER, WIDTH, colors, fonts } from "./theme";
-import type { MagicLinkData } from "./types";
+import { GUTTER, WIDTH, colors, fonts } from "./theme.js";
+import type { MagicLinkData } from "./types.js";
 
 export function magicLinkSubject(data: MagicLinkData): string {
   return data.isNewUser ? "Your Steep sign-in link" : "Sign in to Steep";

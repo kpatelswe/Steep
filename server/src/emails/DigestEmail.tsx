@@ -1,6 +1,6 @@
 import { Body, Container, Head, Hr, Html, Img, Link, Preview, Section, Text } from "@react-email/components";
-import { GUTTER, WIDTH, colors, fonts } from "./theme";
-import type { DigestData, EmailStory, EmailTopic } from "./types";
+import { GUTTER, WIDTH, colors, fonts } from "./theme.js";
+import type { DigestData, EmailStory, EmailTopic } from "./types.js";
 
 const reset = { margin: 0, padding: 0 } as const;
 

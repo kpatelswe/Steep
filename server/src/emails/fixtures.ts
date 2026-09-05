@@ -1,4 +1,4 @@
-import type { DigestData } from "./types";
+import type { DigestData } from "./types.js";
 
 /** Sample issue used by the preview script and the snapshot test. */
 export const sampleDigest: DigestData = {

@@ -1,12 +1,12 @@
 import { Router } from "express";
 import { and, desc, eq, inArray, sql } from "drizzle-orm";
 import { z } from "zod";
-import { requireUser } from "../auth/session";
-import { db } from "../db/client";
-import { articles, topicFeeds, topics, userTopics } from "../db/schema";
-import { refreshTopic } from "../feeds/fetcher";
-import { CUSTOM_TOPIC_ACCENT, googleNewsSearchFeed } from "../feeds/sources";
-import { logger } from "../logger";
+import { requireUser } from "../auth/session.js";
+import { db } from "../db/client.js";
+import { articles, topicFeeds, topics, userTopics } from "../db/schema.js";
+import { refreshTopic } from "../feeds/fetcher.js";
+import { CUSTOM_TOPIC_ACCENT, googleNewsSearchFeed } from "../feeds/sources.js";
+import { logger } from "../logger.js";
 
 export const topicsRouter = Router();
 

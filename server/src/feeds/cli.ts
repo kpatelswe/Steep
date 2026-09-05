@@ -1,5 +1,5 @@
-import { sql } from "../db/client";
-import { refreshAllFeeds } from "./fetcher";
+import { sql } from "../db/client.js";
+import { refreshAllFeeds } from "./fetcher.js";
 
 const stats = await refreshAllFeeds();
 console.table(stats);

@@ -1,7 +1,7 @@
 import { createHash, randomBytes } from "node:crypto";
 import { and, eq, gt, isNull } from "drizzle-orm";
-import { db } from "../db/client";
-import { magicLinks, users, type User } from "../db/schema";
+import { db } from "../db/client.js";
+import { magicLinks, users, type User } from "../db/schema.js";
 
 export const MAGIC_LINK_MINUTES = 15;
 

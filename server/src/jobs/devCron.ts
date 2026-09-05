@@ -1,7 +1,7 @@
 import cron from "node-cron";
-import { logger } from "../logger";
-import { runRefresh } from "./refresh";
-import { runSendDue } from "./sendDue";
+import { logger } from "../logger.js";
+import { runRefresh } from "./refresh.js";
+import { runSendDue } from "./sendDue.js";
 
 /**
  * In-process scheduler for long-lived deployments (local dev, a VPS). On

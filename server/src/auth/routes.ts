@@ -2,15 +2,15 @@ import { Router } from "express";
 import { rateLimit } from "express-rate-limit";
 import { count, eq } from "drizzle-orm";
 import { z } from "zod";
-import { config, isProd } from "../config";
-import { db } from "../db/client";
-import { userTopics } from "../db/schema";
-import { renderMagicLink } from "../emails/render";
-import { logger } from "../logger";
-import { sendEmail } from "../mail/mailer";
-import { tinyPage } from "../pages";
-import { MAGIC_LINK_MINUTES, consumeMagicLink, createMagicLink, normalizeEmail } from "./magicLink";
-import { clearSessionCookie, setSessionCookie, signSession } from "./session";
+import { config, isProd } from "../config.js";
+import { db } from "../db/client.js";
+import { userTopics } from "../db/schema.js";
+import { renderMagicLink } from "../emails/render.js";
+import { logger } from "../logger.js";
+import { sendEmail } from "../mail/mailer.js";
+import { tinyPage } from "../pages.js";
+import { MAGIC_LINK_MINUTES, consumeMagicLink, createMagicLink, normalizeEmail } from "./magicLink.js";
+import { clearSessionCookie, setSessionCookie, signSession } from "./session.js";
 
 export const authRouter = Router();
 

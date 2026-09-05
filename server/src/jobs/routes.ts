@@ -1,10 +1,10 @@
 import { timingSafeEqual } from "node:crypto";
 import { Router, type NextFunction, type Request, type Response } from "express";
 import { waitUntil } from "@vercel/functions";
-import { config } from "../config";
-import { logger } from "../logger";
-import { runRefresh } from "./refresh";
-import { runSendDue } from "./sendDue";
+import { config } from "../config.js";
+import { logger } from "../logger.js";
+import { runRefresh } from "./refresh.js";
+import { runSendDue } from "./sendDue.js";
 
 export const jobsRouter = Router();
 

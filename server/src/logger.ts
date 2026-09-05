@@ -1,5 +1,5 @@
 import pino from "pino";
-import { isProd, isServerless } from "./config";
+import { isProd, isServerless } from "./config.js";
 
 // Pretty output only for a local terminal. Serverless platforms capture plain JSON
 // lines, and pino's pretty transport needs a worker thread plus a dev-only package.

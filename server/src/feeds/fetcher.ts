@@ -1,11 +1,11 @@
 import pLimit from "p-limit";
 import { and, eq, gte, inArray, lt, notExists, sql } from "drizzle-orm";
-import { db } from "../db/client";
-import { articles, clicks, digestArticles, topicFeeds, topics, userTopics, users } from "../db/schema";
-import { logger } from "../logger";
-import { clusterArticles } from "./cluster";
-import { tokenizeTitle } from "./normalize";
-import { MAX_AGE_HOURS, fetchFeedXml, parseFeedXml } from "./parse";
+import { db } from "../db/client.js";
+import { articles, clicks, digestArticles, topicFeeds, topics, userTopics, users } from "../db/schema.js";
+import { logger } from "../logger.js";
+import { clusterArticles } from "./cluster.js";
+import { tokenizeTitle } from "./normalize.js";
+import { MAX_AGE_HOURS, fetchFeedXml, parseFeedXml } from "./parse.js";
 
 interface FeedRow {
   topicId: string;

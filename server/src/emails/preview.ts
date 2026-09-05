@@ -4,8 +4,8 @@
  */
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { sampleDigest } from "./fixtures";
-import { renderDigest, renderMagicLink } from "./render";
+import { sampleDigest } from "./fixtures.js";
+import { renderDigest, renderMagicLink } from "./render.js";
 
 const outDir = process.argv[2] ?? ".preview";
 mkdirSync(outDir, { recursive: true });

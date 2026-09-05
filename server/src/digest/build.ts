@@ -1,10 +1,10 @@
 import { and, desc, eq, gte, inArray, lte, ne, sql } from "drizzle-orm";
-import { db } from "../db/client";
-import { articles, clicks, digestArticles, digests, topics, userTopics, users, type User } from "../db/schema";
-import type { DigestData, EmailStory, EmailTopic } from "../emails/types";
-import { feedbackUrl, sign, trackedArticleUrl, unsubscribeUrl } from "../engage/links";
-import { config } from "../config";
-import { rankTopic } from "../feeds/rank";
+import { db } from "../db/client.js";
+import { articles, clicks, digestArticles, digests, topics, userTopics, users, type User } from "../db/schema.js";
+import type { DigestData, EmailStory, EmailTopic } from "../emails/types.js";
+import { feedbackUrl, sign, trackedArticleUrl, unsubscribeUrl } from "../engage/links.js";
+import { config } from "../config.js";
+import { rankTopic } from "../feeds/rank.js";
 import {
   dateLabel,
   formatDuration,
@@ -15,7 +15,7 @@ import {
   sentAtLabel,
   streakDays,
   timeAgo,
-} from "./time";
+} from "./time.js";
 
 export const MIN_STORIES_PER_TOPIC = 2;
 export const FRESH_HOURS = 24;

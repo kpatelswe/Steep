@@ -1,9 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
 import { SignJWT, jwtVerify } from "jose";
 import { eq } from "drizzle-orm";
-import { config, isProd } from "../config";
-import { db } from "../db/client";
-import { users, type User } from "../db/schema";
+import { config, isProd } from "../config.js";
+import { db } from "../db/client.js";
+import { users, type User } from "../db/schema.js";
 
 export const SESSION_COOKIE = "steep_session";
 const SESSION_DAYS = 30;

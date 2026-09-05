@@ -1,9 +1,9 @@
 import { and, eq, exists, sql } from "drizzle-orm";
-import { db } from "../db/client";
-import { digests, userTopics, users } from "../db/schema";
-import { sendDigestToUser, type SendOutcome } from "../digest/send";
-import { isDue, localDate } from "../digest/time";
-import { logger } from "../logger";
+import { db } from "../db/client.js";
+import { digests, userTopics, users } from "../db/schema.js";
+import { sendDigestToUser, type SendOutcome } from "../digest/send.js";
+import { isDue, localDate } from "../digest/time.js";
+import { logger } from "../logger.js";
 
 export interface SendDueStats {
   considered: number;

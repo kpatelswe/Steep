@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
-import { db, sql } from "./client";
-import { topicFeeds, topics } from "./schema";
-import { CURATED_TOPICS } from "../feeds/sources";
+import { db, sql } from "./client.js";
+import { topicFeeds, topics } from "./schema.js";
+import { CURATED_TOPICS } from "../feeds/sources.js";
 
 for (const t of CURATED_TOPICS) {
   const [row] = await db

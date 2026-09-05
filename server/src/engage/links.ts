@@ -1,5 +1,5 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
-import { config } from "../config";
+import { config } from "../config.js";
 
 /**
  * Short HMAC signatures for links that must work from an email without a

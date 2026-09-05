@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
-import { config, isServerless } from "../config";
-import * as schema from "./schema";
+import { config, isServerless } from "../config.js";
+import * as schema from "./schema.js";
 
 export const sql = postgres(config.DATABASE_URL, {
   // One connection per serverless instance; a small pool for a long-lived process.

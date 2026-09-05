@@ -1,12 +1,12 @@
 import { Router } from "express";
 import { and, eq, sql } from "drizzle-orm";
 import { z } from "zod";
-import { config } from "../config";
-import { db } from "../db/client";
-import { articles, clicks, feedback, userTopics, topics } from "../db/schema";
-import { logger } from "../logger";
-import { tinyPage } from "../pages";
-import { feedbackUrl, verify } from "./links";
+import { config } from "../config.js";
+import { db } from "../db/client.js";
+import { articles, clicks, feedback, userTopics, topics } from "../db/schema.js";
+import { logger } from "../logger.js";
+import { tinyPage } from "../pages.js";
+import { feedbackUrl, verify } from "./links.js";
 
 export const engageRouter = Router();
 const uuid = z.string().uuid();

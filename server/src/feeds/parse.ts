@@ -1,5 +1,5 @@
 import Parser from "rss-parser";
-import { cleanSnippet, cleanTitle, hashUrl, sourceName } from "./normalize";
+import { cleanSnippet, cleanTitle, hashUrl, sourceName } from "./normalize.js";
 
 export interface NormalizedItem {
   url: string;

@@ -1,6 +1,6 @@
 import request from "supertest";
 import { describe, expect, it } from "vitest";
-import { createApp } from "../src/app";
+import { createApp } from "../src/createApp";
 
 describe("job endpoints", () => {
   const app = createApp();

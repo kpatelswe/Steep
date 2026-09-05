@@ -1,12 +1,12 @@
 import { Router } from "express";
 import { and, desc, eq, gte, sql } from "drizzle-orm";
 import { z } from "zod";
-import { requireUser } from "../auth/session";
-import { config } from "../config";
-import { db } from "../db/client";
-import { clicks, digests, topics, userTopics, users } from "../db/schema";
-import { isValidTimezone, localDate, streakDays } from "../digest/time";
-import { tinyPage } from "../pages";
+import { requireUser } from "../auth/session.js";
+import { config } from "../config.js";
+import { db } from "../db/client.js";
+import { clicks, digests, topics, userTopics, users } from "../db/schema.js";
+import { isValidTimezone, localDate, streakDays } from "../digest/time.js";
+import { tinyPage } from "../pages.js";
 
 export const usersRouter = Router();
 

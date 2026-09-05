@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { jaccard } from "./normalize";
+import { jaccard } from "./normalize.js";
 
 export interface ClusterInput {
   id: string;

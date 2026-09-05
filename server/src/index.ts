@@ -1,7 +1,7 @@
-import { createApp } from "./app";
-import { config, isServerless } from "./config";
-import { startDevCron } from "./jobs/devCron";
-import { logger } from "./logger";
+import { createApp } from "./createApp.js";
+import { config, isServerless } from "./config.js";
+import { startDevCron } from "./jobs/devCron.js";
+import { logger } from "./logger.js";
 
 const app = createApp();
 

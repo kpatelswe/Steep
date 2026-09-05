@@ -1,8 +1,8 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { Resend } from "resend";
-import { config, isProd } from "../config";
-import { logger } from "../logger";
+import { config, isProd } from "../config.js";
+import { logger } from "../logger.js";
 
 export interface OutgoingEmail {
   to: string;

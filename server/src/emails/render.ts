@@ -1,7 +1,7 @@
 import { render } from "@react-email/render";
-import DigestEmail, { digestSubject } from "./DigestEmail";
-import MagicLinkEmail, { magicLinkSubject } from "./MagicLinkEmail";
-import type { DigestData, MagicLinkData } from "./types";
+import DigestEmail, { digestSubject } from "./DigestEmail.js";
+import MagicLinkEmail, { magicLinkSubject } from "./MagicLinkEmail.js";
+import type { DigestData, MagicLinkData } from "./types.js";
 
 export interface RenderedEmail {
   subject: string;

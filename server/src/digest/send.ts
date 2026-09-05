@@ -1,11 +1,11 @@
 import { eq } from "drizzle-orm";
-import { db } from "../db/client";
-import { digestArticles, digests, type User } from "../db/schema";
-import { renderDigest } from "../emails/render";
-import { unsubscribeUrl } from "../engage/links";
-import { logger } from "../logger";
-import { sendEmail } from "../mail/mailer";
-import { buildDigest } from "./build";
+import { db } from "../db/client.js";
+import { digestArticles, digests, type User } from "../db/schema.js";
+import { renderDigest } from "../emails/render.js";
+import { unsubscribeUrl } from "../engage/links.js";
+import { logger } from "../logger.js";
+import { sendEmail } from "../mail/mailer.js";
+import { buildDigest } from "./build.js";
 
 export type SendOutcome =
   | { status: "sent"; digestId: string; articleCount: number; dryRun: boolean }
